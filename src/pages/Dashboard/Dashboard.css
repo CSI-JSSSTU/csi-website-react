@@ -1,87 +1,93 @@
 /* Dashboard styling */
 .dashboard {
     padding-top: 80px;
-    /* Add top padding to create space below the navbar */
     background-color: #1A2027;
-    /* Background color */
     width: 100vw;
-    /* Full width */
     height: 100vh;
-    /* Full height */
     display: flex;
-    /* Use flexbox to create a horizontal layout */
+    flex-wrap: wrap;
+    /* Allows wrapping of cards */
+    justify-content: center;
+    /* Center content */
     overflow: hidden;
-    /* Hide overflow */
 }
 
 /* Card styling */
 .card {
     flex: 1;
-    /* Each card takes equal space */
     height: 80%;
-    /* Set a smaller height for cards */
     margin: 20px;
-    /* Add margin around cards for spacing */
     border-radius: 15px;
-    /* Rounded corners */
     position: relative;
-    /* Relative positioning */
     overflow: hidden;
-    /* Hide overflow for rounded corners */
     cursor: pointer;
-    /* Change cursor on hover */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Smooth transition effects */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    /* Subtle shadow for depth */
 }
 
 .card:hover {
     transform: scale(1.05);
-    /* Scale up the card slightly on hover */
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-    /* Enhanced shadow on hover */
 }
 
 /* Card image */
 .card-image {
     width: 100%;
-    /* Full width */
     height: 70%;
-    /* Occupy 70% of card height */
     background-size: cover;
-    /* Cover the card area */
     background-position: center;
-    /* Center the background image */
     transition: transform 0.5s ease;
-    /* Smooth scale transition */
 }
 
 .card:hover .card-image {
     transform: scale(1.1);
-    /* Scale image on hover */
 }
 
 /* Card content */
 .card-content {
     height: 30%;
-    /* Occupy remaining 30% of card height */
     background-color: black;
-    /* Background for text */
     display: flex;
-    /* Flexbox for centering content */
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
     color: white;
-    /* Text color */
     font-size: 24px;
-    /* Font size for visibility */
     font-weight: bold;
-    /* Bold text */
     text-align: center;
-    /* Center text */
     font-family: 'Raleway', sans-serif;
-    /* Font family */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+        height: auto;
+        /* Allow height to adjust based on content */
+    }
+
+    .card {
+        width: 90%;
+        /* Reduce width for smaller screens */
+        height: auto;
+        /* Allow card to take the necessary height */
+        margin: 10px auto;
+        /* Center the card with auto margin */
+    }
+
+    .card-image {
+        height: 200px;
+        /* Set a fixed height for images on mobile */
+    }
+
+    .card-content {
+        font-size: 18px;
+        /* Adjust font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-content {
+        font-size: 16px;
+        /* Further reduce font size for very small screens */
+    }
 }
