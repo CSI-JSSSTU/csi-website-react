@@ -5,7 +5,6 @@ import TeamCard from '../../components/TeamCard/TeamCard'
 
 
 function useOnScreen(ref, rootMargin = "0px") {
-
   const [isIntersecting, setIntersecting] = useState(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -23,58 +22,109 @@ function useOnScreen(ref, rootMargin = "0px") {
   return isIntersecting;
 }
 
-
 const Team = (data) => {
-  const teamRef = useRef();
-  const alumniRef = useRef();
-  const teamOnScreen = useOnScreen(teamRef, "-50%");
+  const coreRef = useRef();
+  const techRef = useRef();
+  const creativeRef = useRef();
+  const editorialRef = useRef();
+  const publicityRef = useRef();
+  const eventRef = useRef();
 
-  return(
+  const coreOnScreen = useOnScreen(coreRef, "-50%");
+
+  return (
     <div className='teams-page'>
-      {/*<img className='dm1' src={Dm3} alt='DM' />*/}
-      <div className='team-section' ref={teamRef} >
+      {/* Core Section */}
+      <div className='team-section' ref={coreRef}>
         <div className='section-title-div'>
-          <div className={teamOnScreen? 'bubble-bg bubble-left-in': 'hide-content'}></div>
-          <div className={teamOnScreen? 'title-text-div': 'title-text-div hide-content'} >
-            <h1 className='section-title-text gray' >Meet</h1>
-            <h1 className='section-title-text gray' >The</h1>
-            <h1 className='section-title-text' >Team</h1>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Core</h1>
           </div>
         </div>
-        <div className={teamOnScreen? 'team-contents': 'team-contents hide-content'} >
-          <div className='team-leaders-div'>
-            {data.teamData.slice(0,2).map((item, idx) => {
-              return(
-                <TeamCard data={item} idx={idx}/>
-              )
-            })}
-          </div>
-            {data.teamData.slice(2).map((item, idx) => {
-              return(
-                <TeamCard data={item} idx={idx}/>
-              )
-            })} 
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.coreData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
         </div>
       </div>
-      <div className='team-section' ref={alumniRef} >
-        <div className='section-title-div-right'>
-          <div className={teamOnScreen? 'hide-content': 'bubble-bg bubble-right-in'}></div>
-          <div className={teamOnScreen? 'title-text-div-right hide-content': 'title-text-div-right'} >
-            <h1 className='section-title-text gray' >Meet</h1>
-            <h1 className='section-title-text gray' >Our</h1>
-            <h1 className='section-title-text' >Alumni</h1>
+
+      {/* Technical Section */}
+      <div className='team-section' ref={techRef}>
+        <div className='section-title-div'>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Technical</h1>
           </div>
         </div>
-        <div className={teamOnScreen? 'alumni-contents hide-content': 'alumni-contents'}>
-          {data.alumniData.map((item, idx) => {
-            return(
-              <TeamCard data={item} idx={idx}/>
-            )
-          })}
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.technicalData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Creative Section */}
+      <div className='team-section' ref={creativeRef}>
+        <div className='section-title-div'>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Creative</h1>
+          </div>
+        </div>
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.creativeData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Editorial Section */}
+      <div className='team-section' ref={editorialRef}>
+        <div className='section-title-div'>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Editorial</h1>
+          </div>
+        </div>
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.editorialData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Publicity Section */}
+      <div className='team-section' ref={publicityRef}>
+        <div className='section-title-div'>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Publicity</h1>
+          </div>
+        </div>
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.publicityData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Event Section */}
+      <div className='team-section' ref={eventRef}>
+        <div className='section-title-div'>
+          <div className={coreOnScreen ? 'bubble-bg bubble-left-in' : 'hide-content'}></div>
+          <div className={coreOnScreen ? 'title-text-div' : 'title-text-div hide-content'}>
+            <h1 className='section-title-text gray'>Event</h1>
+          </div>
+        </div>
+        <div className={coreOnScreen ? 'team-contents' : 'team-contents hide-content'}>
+          {data.eventData.map((item, idx) => (
+            <TeamCard data={item} idx={idx} />
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Team;
