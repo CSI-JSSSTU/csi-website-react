@@ -1,63 +1,58 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React from "react";
+import './Dashboard.css';
+import { useNavigate } from "react-router-dom";
 
-const Domain  = () => {
-    const params = useParams()
-    const domainId = params.domainId
+const services = [
+    {
+        id: '/zenith/aic',
+        title: 'ANDROID DEVELOPMENT',
+        image: '/images/android.jpg',
+    },
+    {
+        id: '/zenith/ml',
+        title: 'MACHINE LEARNING',
+        image: '/images/ml.jpg',
+    },
+    {
+        id: '/zenith/riot',
+        title: 'ROBOTICS & IOT',
+        image: '/images/iot.jpg',
+    },
+    {
+        id: '/zenith/vlsi',
+        title: 'BLOCKCHAIN DEVELOPMENT',
+        image: '/images/vlsi.webp',
+    },
+    {
+        id: '/zenith/wd',
+        title: 'WEB DEVELOPMENT',
+        image: '/images/webdev.png',
+    }
+];
 
-    const domains = {aic: 'Analog IC', ml: 'Machine Learning', riot: 'Robotics & IoT', vlsi: 'VLSI', wd: 'Web Development'}
-    return(
-        <div className="blogs">
-            {/* Title  */}
-            <div className="title">
-                <span className="title-span">{domains[domainId]}</span>
-            </div>
+const Dashboard = () => {
+    const navigate = useNavigate();
 
-            {/* Content */}
-            <section className="blog" id="b1">
-                <div className="blog-number">
-                session#<span className="b-number">1</span>
-                </div>
-                <div className="blog-title">Session Title</div>
-                <div className="blog-content">
-                <p>
-                    A para about the session. (optional) Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <p>
-                    Slides Link: <span className="content-style">Link to Slides</span>
-                </p>
-                <p>
-                    Resources Link: <span className="content-style">Link to youtube/ website</span>
-                </p>
-                </div>
+    const onSelect = (id) => {
+        navigate(id);
+        window.scrollTo(0, 0);
+    };
 
-                <br />
-                <br />
-                <div className="blog-number">
-                session#<span className="b-number">2</span>
+    return (
+        <div className="dashboard">
+            {services.map((item) => (
+                <div className="card" key={item.title} onClick={() => onSelect(item.id)}>
+                    <div
+                        className="card-image"
+                        style={{ backgroundImage: `url(${item.image})` }}
+                    />
+                    <div className="card-content">
+                        <h3>{item.title}</h3>
+                    </div>
                 </div>
-                <div className="blog-title">Session Title</div>
-                <div className="blog-content">
-                <p>
-                    A para about the session. (optional) Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <p>
-                    Slides Link: <span className="content-style">Link to Slides</span>
-                </p>
-                <p>
-                    Resources Link: <span className="content-style">Link to youtube/ website</span>
-                </p>
-                </div>
-            </section>
-            
+            ))}
         </div>
-    )
-}
+    );
+};
 
-export default Domain
+export default Dashboard;
