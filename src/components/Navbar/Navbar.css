@@ -1,95 +1,123 @@
-/* General styling */
-* {
-    font-family: 'Raleway';
-}
-
-/* Navbar Styling */
+/* Navbar.css */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px; /* Reduced padding */
-    width: 100%;
-    background-color: #333; /* Example background color */
-    overflow: hidden; /* Prevents overflow */
+  padding: 0.5rem 1rem;
 }
 
-.navbar-links {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-grow: 1;
-    flex-wrap: nowrap; /* Prevent wrapping */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.navbar-link {
-    font-size: 18px;
-    font-weight: 400;
-    text-decoration: none;
-    color: white;
-    padding: 0 5px; /* Reduced padding */
-    transition: font-size 0.3s ease;
+.brand-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  /* Allow flex item to shrink below its content size */
+  margin-right: 1rem;
+  /* Space between brand and toggle */
 }
 
-/* Hamburger Icon */
-.hamburger-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-    padding: 0 5px; /* Reduced padding */
+.brand-content {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  max-width: 100%;
 }
 
-/* Adjust font size for smaller screens */
-@media only screen and (max-width: 768px) {
-    .navbar-link {
-        font-size: 16px; /* Shrinks the text size on medium screens */
-    }
+.brand-logo {
+  height: 45px;
+  width: 45px;
+  flex-shrink: 0;
+  margin-right: 10px;
 }
 
-@media only screen and (max-width: 576px) {
-    .navbar-link {
-        font-size: 14px; /* Shrinks the text size on smaller screens */
-    }
-
-    .hamburger-icon {
-        font-size: 22px; /* Slightly reduce hamburger icon size */
-    }
-
-    .navbar {
-        padding: 5px 10px; /* Further reduce padding */
-    }
-
-    .navbar-links {
-        justify-content: space-between; /* Ensure spacing on smaller screens */
-    }
+.brand-text {
+  font-size: 20px;
+  color: white;
+  font-weight: bolder;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  /* Allow text to shrink */
 }
 
-/* Alert box styling */
-.alert-box {
+.navbar-toggler {
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  flex-shrink: 0;
+  /* Prevent toggle from shrinking */
+}
+
+.navbar-collapse {
+  flex-grow: 0;
+  /* Prevent collapse from growing */
+}
+
+.navbar-nav {
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-link {
+  padding: 0.5rem 0.75rem;
+}
+
+.sign-in-button {
+  /* Add your button styles here */
+  margin-left: 0.75rem;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .brand-text {
+    font-size: 16px;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-collapse {
     position: absolute;
-    bottom: 0;
-    right: -50%;
-    background-color: red;
-    color: white;
-    font-size: 24px;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin: 2%;
-    animation-name: alert;
-    animation-duration: 5s;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #343a40;
+    /* Match your navbar background */
+    padding: 0.5rem 1rem;
+  }
 }
 
-@keyframes alert {
-    0% {
-      right: -50%;
-    }
-    20% {
-      right: 0;
-    }
-    80% {
-      right: 0;
-    }
-    100% {
-      right: -50%;
-    }
+/* Existing styles for alert box */
+.alert-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: red;
+  color: white;
+  font-size: 18px;
+  border-radius: 4px;
+  padding: 10px 20px;
+  animation: alertSlide 5s ease-in-out;
+  z-index: 1000;
+}
+
+@keyframes alertSlide {
+
+  0%,
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  10%,
+  90% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
