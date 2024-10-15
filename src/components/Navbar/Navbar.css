@@ -8,21 +8,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 15px; /* Reduced padding */
     width: 100%;
     background-color: #333; /* Example background color */
+    overflow: hidden; /* Prevents overflow */
 }
 
-.navbar-link {
-    font-size: 18px;
-    font-weight: 400;
-    text-decoration: none;
-    color: white;
-    padding: 10px;
-    transition: font-size 0.3s ease;
-}
-
-/* Navbar Links and Icon are in a single flex row */
 .navbar-links {
     display: flex;
     align-items: center;
@@ -31,11 +22,21 @@
     flex-wrap: nowrap; /* Prevent wrapping */
 }
 
+.navbar-link {
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    padding: 0 5px; /* Reduced padding */
+    transition: font-size 0.3s ease;
+}
+
+/* Hamburger Icon */
 .hamburger-icon {
     font-size: 24px;
     cursor: pointer;
     color: white;
-    padding: 10px;
+    padding: 0 5px; /* Reduced padding */
 }
 
 /* Adjust font size for smaller screens */
@@ -52,6 +53,10 @@
 
     .hamburger-icon {
         font-size: 22px; /* Slightly reduce hamburger icon size */
+    }
+
+    .navbar {
+        padding: 5px 10px; /* Further reduce padding */
     }
 
     .navbar-links {
