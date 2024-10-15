@@ -1,12 +1,65 @@
+/* General styling */
 * {
     font-family: 'Raleway';
 }
 
-.navbar-link{
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #333; /* Example background color */
+}
+
+.navbar-link {
     font-size: 18px;
     font-weight: 400;
-  }
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    transition: font-size 0.3s ease;
+}
 
+/* Navbar Links and Icon are in a single flex row */
+.navbar-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.hamburger-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    padding: 10px;
+}
+
+/* Adjust font size for smaller screens */
+@media only screen and (max-width: 768px) {
+    .navbar-link {
+        font-size: 16px; /* Shrinks the text size on medium screens */
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .navbar-link {
+        font-size: 14px; /* Shrinks the text size on smaller screens */
+    }
+
+    .hamburger-icon {
+        font-size: 22px; /* Slightly reduce hamburger icon size */
+    }
+
+    .navbar-links {
+        justify-content: space-between; /* Ensure spacing on smaller screens */
+    }
+}
+
+/* Alert box styling */
 .alert-box {
     position: absolute;
     bottom: 0;
@@ -25,16 +78,13 @@
     0% {
       right: -50%;
     }
-  
     20% {
       right: 0;
     }
-
     80% {
       right: 0;
     }
-
     100% {
       right: -50%;
     }
-  }
+}
