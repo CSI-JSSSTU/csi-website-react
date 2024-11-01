@@ -1,6 +1,4 @@
-/* Navbar.css */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
+/* General Navbar Styles */
 .navbar {
   padding: 0.5rem 1rem;
   font-family: 'Roboto', sans-serif;
@@ -17,21 +15,17 @@
   display: flex;
   align-items: center;
   flex: 1;
-  min-width: 0;
-  /* Allow flex item to shrink below its content size */
 }
 
 .brand-content {
   display: flex;
   align-items: center;
   text-decoration: none;
-  max-width: 100%;
 }
 
 .brand-logo {
   height: 45px;
   width: 45px;
-  flex-shrink: 0;
   margin-right: 10px;
 }
 
@@ -39,27 +33,7 @@
   font-size: 22px;
   color: white;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-  /* Allow text to shrink */
   letter-spacing: 0.5px;
-}
-
-.navbar-toggler {
-  padding: 0.25rem 0.5rem;
-  font-size: 1rem;
-  margin-left: 1rem;
-}
-
-.navbar-collapse {
-  flex-grow: 0;
-}
-
-.navbar-nav {
-  display: flex;
-  align-items: center;
 }
 
 .nav-link {
@@ -73,7 +47,8 @@
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.sign-in-button {
+/* Single Sign In/Up Button */
+.sign-in-up-button {
   margin-left: 0.75rem;
   background-color: #007bff;
   color: white;
@@ -85,11 +60,11 @@
   transition: background-color 0.3s ease;
 }
 
-.sign-in-button:hover {
+.sign-in-up-button:hover {
   background-color: #0056b3;
 }
 
-/* Media query for smaller screens */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .brand-text {
     font-size: 18px;
@@ -101,7 +76,6 @@
     left: 0;
     right: 0;
     background-color: #343a40;
-    /* Match your navbar background */
     padding: 0.5rem 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -115,13 +89,13 @@
     padding: 0.5rem 0;
   }
 
-  .sign-in-button {
+  .sign-in-up-button {
     margin-left: 0;
     margin-top: 0.5rem;
   }
 }
 
-/* Existing styles for alert box */
+/* Alert Box */
 .alert-box {
   position: fixed;
   bottom: 20px;
@@ -134,19 +108,14 @@
   animation: alertSlide 5s ease-in-out;
   z-index: 1000;
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
 }
 
 @keyframes alertSlide {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateX(100%);
     opacity: 0;
   }
-
-  10%,
-  90% {
+  10%, 90% {
     transform: translateX(0);
     opacity: 1;
   }
