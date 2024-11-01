@@ -1,204 +1,192 @@
-// import React , { useState, useEffect } from "react";
-// import "./Events.css";
-// import PastEvents from '../../components/PastEvents/PastEvents'
-
-// import {getStorage, ref, getDownloadURL, listAll} from "firebase/storage";
-// import {app} from '../../utils/firebase'
-
-// const storage = getStorage(app)
-
-// const pastEventsRef = ref(storage, 'Events/Past-Events');
-// const upcomingEventsRef = ref(storage, 'Events/Upcoming-Events');
-
-// const Events = () => {
-//   const [pastEventPosters, setPastEventPosters] = useState([]);
-//   const [upcomingEventPosters, setUpcomingEventPosters] = useState([]);
-
-//   useEffect(() => {
-//     listAll(pastEventsRef)
-//     .then((res) => {
-//       return Promise.all(res.items.map((itemRef) => getDownloadURL(itemRef)));
-//     })
-//     .then((urls) => {
-//       setPastEventPosters(urls);
-//     })
-//     .catch((err) => console.error("Error fetching past event posters:", err));
-//     // listAll(pastEventsRef)
-//     //   .then((res) => {
-//     //     const urls = [];
-//     //     res.items.forEach((itemRef) => {
-//     //       urls.push(getDownloadURL(itemRef));
-//     //     });
-//     //     return Promise.all(urls);
-//     //   })
-//     //   .then((urls) => {
-//     //     setPastEventPosters(urls);
-//     //   })
-//     //   .catch((err) => console.log(err));
-
-//     listAll(upcomingEventsRef)
-//       .then((res) => {
-//         const urls = [];
-//         res.items.forEach((itemRef) => {
-//           urls.push(getDownloadURL(itemRef));
-//         });
-//         return Promise.all(urls);
-//       })
-//       .then((urls) => {
-//         setUpcomingEventPosters(urls);
-//       })
-//       .catch((err) => console.log(err));
-//   }, []);
-
-//   return (
-//     <div className="wrapper">
-//       <section className="upcoming-events">
-//         <div className="title">
-//           Upcoming Events & <span className="title-span">Workshops</span>
-//         </div>
-//         <PastEvents slides={upcomingEventPosters} />
-//       </section>
-//       <section className="upcoming-events">
-//         <div className="title">
-//           Past Events & <span className="title-span">Workshops</span>
-//         </div>
-//         <PastEvents slides={pastEventPosters} />
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default Events;
-
-
-
-
-// // const pastEventPosters = [];
-// // const upcomingEventPosters = [];
-
-// // listAll(pastEventsRef)
-// //   .then((res) => {
-// //     res.items.forEach(itemRef => {
-// //       return getDownloadURL(itemRef).then((url) => {
-// //         pastEventPosters.push(url);
-// //       })
-// //     })
-// //   }).catch(err => console.log(err))
-
-// // listAll(upcomingEventsRef)
-// //   .then((res) => {
-// //     res.items.forEach(itemRef => {
-// //       return getDownloadURL(itemRef).then((url) => {
-// //         upcomingEventPosters.push(url);
-// //       })
-// //     })
-// //   }).catch(err => console.log(err))
-
-// // const Events = () => {
-// //   return (
-// //     <div className="wrapper">
-// //       <section className="upcoming-events">
-// //         <div className="title">
-// //           Upcoming Events & <span className="title-span">Workshops</span>
-// //         </div>
-// //         <PastEvents slides={upcomingEventPosters}/>
-// //       </section>
-// //       <section className="upcoming-events">
-// //         <div className="title">
-// //           Past Events & <span className="title-span">Workshops</span>
-// //         </div>
-// //         <PastEvents slides={pastEventPosters}/>
-// //       </section>
-// //     </div>
-// //   );
-// // };
-
-// // export default Events;
-
-// // import React from "react";
-// // import "./Events.css";
-// // import { getFirestore, doc, getDoc } from 'firebase/firestore';
-// // import { app } from '../../utils/firebase'; // Your Firebase app instance
-
-// // const db = getFirestore(app);
-// // const docRef = doc(db, 'Events', 'Past-Events', 'even1'); // Update with your document path
-// // getDoc(docRef).then((doc) => {
-// //   if (doc.exists()) {
-// //     const posterUrl = doc.data().poster.url; // Access the URL
-// //     console.log(posterUrl);
-// //   } else {
-// //     console.log('Document not found');
-// //   }
-// // });
-
-// // export default Events;
-
-import React, { useState, useEffect } from "react";
-import "./Events.css";
-import PastEvents from '../../components/PastEvents/PastEvents';
-import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
-import { app } from '../../utils/firebase';
-
-const storage = getStorage(app);
-
-const pastEventsRef = ref(storage, 'Events/Past-Events');
-const upcomingEventsRef = ref(storage, 'Events/Upcoming-Events');
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authProvider';
+import './Events.css'; // Import the CSS file
 
 const Events = () => {
-  const [pastEventPosters, setPastEventPosters] = useState([]);
-  const [upcomingEventPosters, setUpcomingEventPosters] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext); // Get user information from AuthContext
+  const navigate = useNavigate(); // useNavigate hook to redirect
+  const [upcomingIndex, setUpcomingIndex] = useState(0);
+  const [pastIndex, setPastIndex] = useState(0);
+  const [events, setEvents] = useState({
+    upcoming: [],
+    past: []
+  });
 
   useEffect(() => {
-    const fetchPosters = async () => {
-      try {
-        const [pastRes, upcomingRes] = await Promise.all([
-          listAll(pastEventsRef),
-          listAll(upcomingEventsRef),
-        ]);
-
-        const pastUrls = await Promise.all(pastRes.items.map((itemRef) => getDownloadURL(itemRef)));
-        const upcomingUrls = await Promise.all(upcomingRes.items.map((itemRef) => getDownloadURL(itemRef)));
-
-        setPastEventPosters(pastUrls);
-        setUpcomingEventPosters(upcomingUrls);
-      } catch (err) {
-        setError("Failed to load event posters.");
-        console.error("Error fetching event posters:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosters();
+    setEvents({
+      upcoming: [
+        {
+          id: 1,
+          title: "Tech Conference 2024",
+          description: "Join us for a day of cutting-edge technology discussions, networking, and hands-on workshops with industry experts.",
+          date: "Nov 15, 2024",
+          time: "9:00 AM",
+          location: "Convention Center",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          formLink: "https://forms.google.com/techconf2024",
+        },
+        {
+          id: 2,
+          title: "Startup Meetup",
+          description: "Connect with fellow entrepreneurs and investors in this exclusive networking event focused on technology startups.",
+          date: "Dec 1, 2024",
+          time: "2:00 PM",
+          location: "Innovation Hub",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          formLink: "https://forms.google.com/startupmeetup",
+        },
+        {
+          id: 3,
+          title: "AI Workshop",
+          description: "Learn about the latest developments in AI and machine learning through interactive sessions and practical demonstrations.",
+          date: "Dec 10, 2024",
+          time: "10:00 AM",
+          location: "Tech Campus",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          formLink: "https://forms.google.com/aiworkshop",
+        }
+      ],
+      past: [
+        {
+          id: 4,
+          title: "Web Dev Summit",
+          description: "A comprehensive overview of modern web development practices and emerging technologies.",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          instaLink: "https://www.instagram.com/p/webdevsummit",
+        },
+        {
+          id: 5,
+          title: "Design Workshop",
+          description: "Creative sessions exploring UI/UX principles and design thinking methodologies.",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          instaLink: "https://www.instagram.com/p/designworkshop",
+        },
+        {
+          id: 6,
+          title: "Coding Bootcamp",
+          description: "Intensive hands-on coding sessions covering full-stack development fundamentals.",
+          imageUrl: "https://via.placeholder.com/300x200", // Replace with actual image URL
+          instaLink: "https://www.instagram.com/p/codingbootcamp",
+        }
+      ]
+    });
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
+  const handleRegisterClick = (url) => {
+    if (user) { // Check if the user is signed in
+      window.open(url, '_blank');
+    } else {
+      alert('Please sign in to register for events.'); // Alert to sign in
+      navigate('/signinup'); // Redirect to SignInUp page
+    }
+  };
 
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
+  const handleInstaClick = (url) => {
+    window.open(url, '_blank');
+  };
+
+  const UpcomingEventCard = ({ event }) => (
+    <div className="event-card" onClick={(e) => e.stopPropagation()}>
+      <div className="card-container">
+        <div className="card-image">
+          <img src={event.imageUrl} alt={event.title} />
+        </div>
+        <div className="card-content">
+          <h3 className="card-title">{event.title}</h3>
+          <p className="card-description">{event.description}</p>
+          <div className="event-details">
+            <div className="detail-item">
+              <span className="icon">📅</span>
+              <span>{event.date}</span>
+            </div>
+            <div className="detail-item">
+              <span className="icon">⏰</span>
+              <span>{event.time}</span>
+            </div>
+            <div className="detail-item">
+              <span className="icon">📍</span>
+              <span>{event.location}</span>
+            </div>
+          </div>
+        </div>
+        <div className="card-footer">
+          <button className="register-button" onClick={() => handleRegisterClick(event.formLink)}>Register Now</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const PastEventCard = ({ event }) => (
+    <div className="event-card" onClick={(e) => e.stopPropagation()}>
+      <div className="card-container">
+        <div className="card-image">
+          <img src={event.imageUrl} alt={event.title} />
+        </div>
+        <div className="card-content">
+          <h3 className="card-title">{event.title}</h3>
+          <p className="card-description">{event.description}</p>
+        </div>
+        <div className="card-footer">
+          <button className="instagram-button" onClick={() => handleInstaClick(event.instaLink)}>View on Instagram</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const SliderSection = ({ title, events, currentIndex, setIndex, EventCardComponent }) => (
+    <div className="slider-section">
+      <h2 className="section-title">{title}</h2>
+      <div className="slider-container">
+        <div className="slider-wrapper">
+          <div 
+            className="slider-content"
+            style={{ transform: `translateX(-${currentIndex * 288}px)` }}
+          >
+            {events.map((event) => (
+              <EventCardComponent key={event.id} event={event} />
+            ))}
+          </div>
+        </div>
+        {currentIndex > 0 && (
+          <button
+            onClick={() => setIndex(currentIndex - 1)}
+            className="slider-button left"
+          >
+            &#8249;
+          </button>
+        )}
+        {currentIndex < events.length - 1 && (
+          <button
+            onClick={() => setIndex(currentIndex + 1)}
+            className="slider-button right"
+          >
+            &#8250;
+          </button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="wrapper">
-      <section className="upcoming-events">
-        <div className="title">
-          Upcoming Events & <span className="title-span">Workshops</span>
-        </div>
-        <PastEvents slides={upcomingEventPosters} />
-      </section>
-      <section className="past-events">
-        <div className="title">
-          Past Events & <span className="title-span">Workshops</span>
-        </div>
-        <PastEvents slides={pastEventPosters} />
-      </section>
+    <div className="events-page">
+      <h1 className="section-title">Events</h1>
+      <SliderSection
+        title="Upcoming Events"
+        events={events.upcoming}
+        currentIndex={upcomingIndex}
+        setIndex={setUpcomingIndex}
+        EventCardComponent={UpcomingEventCard}
+      />
+      <SliderSection
+        title="Past Events"
+        events={events.past}
+        currentIndex={pastIndex}
+        setIndex={setPastIndex}
+        EventCardComponent={PastEventCard}
+      />
     </div>
   );
 };
 
 export default Events;
-
