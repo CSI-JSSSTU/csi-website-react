@@ -1,5 +1,7 @@
 .events-page {
   padding: 20px;
+  background-color: #1a2027;
+  color: white;
 }
 
 .section-title {
@@ -9,6 +11,7 @@
 
 .slider-section {
   margin-bottom: 40px;
+  padding: 40px;
 }
 
 .slider-container {
@@ -49,10 +52,21 @@
   height: auto;
 }
 
-.card-content {
-  padding: 15px;
+.card-Content {
+  height: 30%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
 }
-
 .card-title {
   font-size: 1.5em;
   margin: 0;
@@ -78,7 +92,7 @@
   margin-right: 5px;
 }
 
-.card-footer {
+.cardFooter {
   padding: 10px;
   display: flex;
   justify-content: center;
