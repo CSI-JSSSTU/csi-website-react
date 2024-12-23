@@ -19,7 +19,7 @@ const Events = () => {
         {
           id: 1,
           title: "Tech Conference 2024",
-          description: "Join us for a day of cutting-edge technology discussions, networking, and hands-on workshops with industry experts.",
+          description: "Join us for a day of cutting-edge technology discussions, networking, and hands-on workshops with industry experts",
           date: "Nov 15, 2024",
           time: "9:00 AM",
           location: "Convention Center",
@@ -85,14 +85,13 @@ const Events = () => {
   const handleInstaClick = (url) => {
     window.open(url, '_blank');
   };
-
   const UpcomingEventCard = ({ event }) => (
     <div className="event-card" onClick={(e) => e.stopPropagation()}>
       <div className="card-container">
         <div className="card-image">
           <img src={event.imageUrl} alt={event.title} />
         </div>
-        <div className="card-content">
+        <div className="card-Content">
           <h3 className="card-title">{event.title}</h3>
           <p className="card-description">{event.description}</p>
           <div className="event-details">
@@ -109,8 +108,6 @@ const Events = () => {
               <span>{event.location}</span>
             </div>
           </div>
-        </div>
-        <div className="card-footer">
           <button className="register-button" onClick={() => handleRegisterClick(event.formLink)}>Register Now</button>
         </div>
       </div>
@@ -123,11 +120,9 @@ const Events = () => {
         <div className="card-image">
           <img src={event.imageUrl} alt={event.title} />
         </div>
-        <div className="card-content">
+        <div className="card-Content">
           <h3 className="card-title">{event.title}</h3>
           <p className="card-description">{event.description}</p>
-        </div>
-        <div className="card-footer">
           <button className="instagram-button" onClick={() => handleInstaClick(event.instaLink)}>View on Instagram</button>
         </div>
       </div>
